@@ -7,11 +7,14 @@ use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\Length;
@@ -63,7 +66,7 @@ class ProfilType extends AbstractType
                 'placeholder'=> '--Choisir un Campus--',
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('t')
-                        ->orderBy('t.nom', 'ASC');
+                        ->orderBy('t.name', 'ASC');
                 }
             ])
             ->add('image', FileType::class, [
@@ -89,6 +92,7 @@ class ProfilType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'isEdit' => false
         ]);
     }
 }
