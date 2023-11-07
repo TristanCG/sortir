@@ -48,14 +48,16 @@ class Outside
 
     #[ORM\ManyToOne(inversedBy: 'outsides')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Users $promoter = null;
+    private ?User $promoter = null;
 
-    #[ORM\ManyToMany(targetEntity: UsersOutside::class, mappedBy: 'outside')]
-    private Collection $usersOutsides;
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'outsides')]
+    private Collection $particpants;
+
 
     public function __construct()
     {
         $this->usersOutsides = new ArrayCollection();
+        $this->particpants = new ArrayCollection();
     }
     
 
@@ -172,12 +174,12 @@ class Outside
         return $this;
     }
 
-    public function getPromoter(): ?Users
+    public function getPromoter(): ?User
     {
         return $this->promoter;
     }
 
-    public function setPromoter(?Users $promoter): static
+    public function setPromoter(?User $promoter): static
     {
         $this->promoter = $promoter;
 
@@ -185,29 +187,30 @@ class Outside
     }
 
     /**
-     * @return Collection<int, UsersOutside>
+     * @return Collection<int, User>
      */
-    public function getUsersOutsides(): Collection
+    public function getParticpants(): Collection
     {
-        return $this->usersOutsides;
+        return $this->particpants;
     }
 
-    public function addUsersOutside(UsersOutside $usersOutside): static
+    public function addParticpant(User $particpant): static
     {
-        if (!$this->usersOutsides->contains($usersOutside)) {
-            $this->usersOutsides->add($usersOutside);
-            $usersOutside->addOutside($this);
+        if (!$this->particpants->contains($particpant)) {
+            $this->particpants->add($particpant);
         }
 
         return $this;
     }
 
-    public function removeUsersOutside(UsersOutside $usersOutside): static
+    public function removeParticpant(User $particpant): static
     {
-        if ($this->usersOutsides->removeElement($usersOutside)) {
-            $usersOutside->removeOutside($this);
-        }
+        $this->particpants->removeElement($particpant);
 
         return $this;
     }
+
+
+
+
 }
