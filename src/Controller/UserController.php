@@ -16,7 +16,7 @@ class UserController extends AbstractController
 
         $users = $userRepository->findAll();
         return $this->render('user/list.html.twig',
-        ['user' => $users]);
+        ['users' => $users]);
     }
 
     #[Route('/{id}/disable', name: 'user_disable', methods: ['GET'])]

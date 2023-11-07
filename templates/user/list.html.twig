@@ -15,11 +15,12 @@
             <th></th>
             <th></th>
         </tr>
-        {% for users in user %}
+        {% for user in users %}
             <tr>
-                <td>{{ user.nom }}</td>
-                <td>{{ user.prenom }}</td>
-                <td>{{ user.pseudo }}</td>
+                <td>{{ user.campus.name }}</td>
+                <td>{{ user.lastname }}</td>
+                <td>{{ user.firstname }}</td>
+                <td>{{ user.nickname }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.phone }}</td>
                 <td><a href="#">Désactiver</a></td>
