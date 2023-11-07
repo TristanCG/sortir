@@ -67,6 +67,7 @@ class UserController extends AbstractController
             $entityManager->flush();
         } else {
             // Gérez le cas où l'utilisateur n'est pas trouvé, par exemple, en affichant un message d'erreur.
+            return $this->redirectToRoute('user_list');
         }
 
         // Redirigez vers la route 'user_list' ou ailleurs après la suppression
