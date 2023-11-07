@@ -18,20 +18,17 @@ class Campus
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Users::class)]
-    private Collection $users;
-
-    #[ORM\OneToMany(mappedBy: 'campus', targetEntity: Users::class)]
-    private Collection $fk_user;
-
     #[ORM\OneToMany(mappedBy: 'campus', targetEntity: Outside::class)]
     private Collection $outsides;
 
+    #[ORM\OneToMany(mappedBy: 'campus', targetEntity: User::class)]
+    private Collection $users;
+
     public function __construct()
     {
-        $this->users = new ArrayCollection();
-        $this->fk_user = new ArrayCollection();
+
         $this->outsides = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -51,65 +48,7 @@ class Campus
         return $this;
     }
 
-    /**
-     * @return Collection<int, Users>
-     */
-    public function getUsers(): Collection
-    {
-        return $this->users;
-    }
 
-    public function addUser(Users $user): static
-    {
-        if (!$this->users->contains($user)) {
-            $this->users->add($user);
-            $user->setCategory($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(Users $user): static
-    {
-        if ($this->users->removeElement($user)) {
-            // set the owning side to null (unless already changed)
-            if ($user->getCategory() === $this) {
-                $user->setCategory(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Users>
-     */
-    public function getFkUser(): Collection
-    {
-        return $this->fk_user;
-    }
-
-    public function addFkUser(Users $fkUser): static
-    {
-        if (!$this->fk_user->contains($fkUser)) {
-            $this->fk_user->add($fkUser);
-            $fkUser->setCampus($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFkUser(Users $fkUser): static
-    {
-        if ($this->fk_user->removeElement($fkUser)) {
-            // set the owning side to null (unless already changed)
-            if ($fkUser->getCampus() === $this) {
-                $fkUser->setCampus(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Outside>
@@ -135,6 +74,36 @@ class Campus
             // set the owning side to null (unless already changed)
             if ($outside->getCampus() === $this) {
                 $outside->setCampus(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): static
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->setCampus($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): static
+    {
+        if ($this->users->removeElement($user)) {
+            // set the owning side to null (unless already changed)
+            if ($user->getCampus() === $this) {
+                $user->setCampus(null);
             }
         }
 
