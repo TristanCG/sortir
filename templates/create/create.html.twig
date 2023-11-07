@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}Crée une sortie{% endblock %}
+{% block stylesheets %}<link rel="stylesheet" type="text/css" href="{{ asset('css/createOutside.css') }}">{% endblock %}
+
+{% block body %}
+    <header>
+        <navbar>
+            <div class="logo">
+                <h1>LogoSorti.com</h1>
+            </div>
+            <div class="menu">
+                <a href="{{ asset('home/home.html.twig') }}">Accueil</a>
+                <a href="{{ asset('myProfil/myProfil.html.twig') }}">Mon Profil</a>
+                <a href="{{ asset('log/logOut.html.twig') }}">Se déconnecter</a>
+            </div>
+        </navbar>
+    </header>
+
+    <main>
+        <div class="titre_create">
+            <h2>Créer une sortie</h2>
+        </div>
+        <section class="form_create">
+            {{ form_start(form_sortie) }}
+            {{ form_row(form_sortie.nom) }}
+        </section>
+
+    </main>
+{% endblock %}
