@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des membres{% endblock %}
+
+{% block body %}
+<div>
+    <table>
+        <tr>
+            <th>Campus</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Pseudo</th>
+            <th>Mail</th>
+            <th>Tel</th>
+            <th></th>
+            <th></th>
+        </tr>
+        {% for users in user %}
+            <tr>
+                <td>{{ user.nom }}</td>
+                <td>{{ user.prenom }}</td>
+                <td>{{ user.pseudo }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.phone }}</td>
+                <td><a href="#">Désactiver</a></td>
+                <td><a href="#">Supprimer</a></td>
+            </tr>
+        {% endfor %}
+
+    </table>
+</div>
+{% endblock %}
