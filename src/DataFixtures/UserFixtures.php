@@ -6,9 +6,16 @@ use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 
 class UserFixtures extends Fixture implements DependentFixtureInterface
 {
+
+    public function __construct(private UserPasswordHasherInterface $passwordHasher)
+    {
+    }
+
     public function load(ObjectManager $manager): void
     {
         $campus1 = $this->getReference('campus-rennes');
@@ -23,7 +30,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $statut->setFirstname('Jean');
         $statut->setEmail('admin@admin.fr');
         $statut->setPhone('0748759784');
-        $statut->setPassword('$2y$10$XnvQBU2iv/kLof3r51Mg4OGBpylJYDsged.KTv/etQVW4wN1pO1VS');
+        $statut->setPassword($this->passwordHasher->hashPassword($statut, 'admin123'));
         $statut->setActive(true);
         $statut->setNickname('Administrator');
         $statut->setRoles(["ROLE_ADMIN"]);
@@ -35,7 +42,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $statut->setFirstname('MOUCHOIR');
         $statut->setEmail('root@root.fr');
         $statut->setPhone('0748759784');
-        $statut->setPassword('$2y$10$2Max6X/MeiT/UGUkFYzUruaCU4EVfcCd8uKyw50S1/89CNYqaafJm');
+        $statut->setPassword($this->passwordHasher->hashPassword($statut, 'root123'));
         $statut->setActive(true);
         $statut->setNickname('Rochambeau');
         $statut->setRoles(["ROLE_USER"]);
@@ -47,7 +54,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $statut->setFirstname('Michel');
         $statut->setEmail('test@root.fr');
         $statut->setPhone('0748759784');
-        $statut->setPassword('$2y$10$2Max6X/MeiT/UGUkFYzUruaCU4EVfcCd8uKyw50S1/89CNYqaafJm');
+        $statut->setPassword($this->passwordHasher->hashPassword($statut, 'root123'));
         $statut->setActive(false);
         $statut->setNickname('Random');
         $statut->setRoles(["ROLE_USER"]);
