@@ -60,10 +60,10 @@ class ProfilType extends AbstractType
                 // this is read and encoded in the controller
                 'mapped' => false,
             ])
+
             ->add('campus', EntityType::class, [
                 'class' => Campus::class,
                 'choice_label' => 'name',
-                'placeholder'=> '--Choisir un Campus--',
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('t')
                         ->orderBy('t.name', 'ASC');
@@ -92,7 +92,6 @@ class ProfilType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
-            'isEdit' => false
         ]);
     }
 }
