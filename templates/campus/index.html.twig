@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CampusController!{% endblock %}
+
+{% block body %}
+    <section>
+        <h1>Campus</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ path('app_panneau_controle') }}">Panneau de controle</a></li>
+            </ul>
+        </nav>
+
+        <table>
+            <tr>
+                <th>Nom</th>
+                <th>Action</th>
+            </tr>
+
+            {% for campu in campus %}
+                <tr>
+                    <td>{{ campu.name}}</td>
+                    <td>
+                        <a href="{{ path('campus_edite', {'id': campu.id}) }}">Modifier</a>
+                         -
+                        <a href="{{ path('campus_delete', {'id': campu.id}) }}">Supprimer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+
+            {{ form_start(campusForm)}}
+                <tr>
+                    <td>{{ form_widget(campusForm) }}</td>
+                    <td><button>Ajouter</button></td>
+                </tr>
+            {{ form_end(campusForm)}}
+        </table>
+    </section>
+{% endblock %}
