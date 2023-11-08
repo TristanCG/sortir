@@ -19,28 +19,34 @@ class OutsideController extends AbstractController
     #[Route('/outside/place', name: 'app_outside_getId')]
     public function get(Request $request)
     {
-        $session = $request->getSession();
-        $placeId = $request->request->get('placeId');
-        $session->set('place', $placeId);
+        $session = $request->getSession(); // Récupération de la session associé à la demande
+        $placeId = $request->request->get('placeId'); // Extraction de la valeur placId de la requête, valeur soumise par le  formualire
+        $session->set('place', $placeId); // Permet de stocker la valeur placeId dans la session de l'utilisateur concernée
 
         return new Response('');
     }
 
-    #[Route('/outside/create', name: 'app_create_outside', methods: ['GET', 'POST'])]
+    #[Route('/create_outside', name: 'app_create_outside', methods: ['GET', 'POST'])]
     public function index(
-        PlaceRepository $placeRepository,
-        CityRepository $cityRepository,
-        StatutRepository $statutRepository,
-        Request $request,
-        EntityManagerInterface $em
-    ): Response {
+        PlaceRepository $placeRepository, // Paramètre permettant d'accéder à Place
+        CityRepository $cityRepository, // Paramètre permettant d'accéder à City
+        StatutRepository $statutRepository, // Paramètre permettant d'accéder à Statut
+        Request $request, // Paramètre permettant d'accéder aux données
+        EntityManagerInterface $em //Parmètre permettant une bonne gestion des entit
+    ): Response
+    {
+        // Recuperation de toutes les proprietes de la table city
         $citys = $cityRepository->findAll();
-        $statutCrea = $statutRepository->findOneBy(['name' => Statut::class]);
-        $statutPublish = $statutRepository->findOneBy(['name' => Statut::class]);
+        // Recuperation du Statut CREATE via la table STATUT
+        $statutCrea = $statutRepository->findByWording(Statut::CREEE);
+        // Recuperation du Statut PUBLIER via la table STATUT
+        $statutPublish = $statutRepository->findByWording(Statut::PUBLIER);
+        // Recuperation des infos de la session
         $session = $request->getSession();
+        // Creation d'une sortie
         $outside = new Outside();
+        // Attribution d'un promotteur à une sortie
         $outside->setPromoter($this->getUser());
-        $outside->setCampus($this->getUser()->getCampus());
 
         if ($request->request->has('register')) {
             $outside->setStatut($statutCrea);
@@ -50,9 +56,12 @@ class OutsideController extends AbstractController
             $outside->setStatut($statutPublish);
         }
 
+        // Création d'un formulaire de sortie
         $form_sortie = $this->createForm(OutsideType::class, $outside);
+        // Permet de récupérer les données et de les associer au formualire de sortie
         $form_sortie->handleRequest($request);
 
+        // On check si le formualire à été rempli avant d'être envoyé
         if ($form_sortie->isSubmitted() && $form_sortie->isValid()) {
             $placeId = $session->get('place');
             if ($placeId) {
@@ -71,6 +80,7 @@ class OutsideController extends AbstractController
         return $this->render('sortie/create.html.twig', [
             'form_sortie' => $form_sortie,
             'citys' => $citys,
+            ''
         ]);
     }
 }

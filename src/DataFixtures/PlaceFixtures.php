@@ -21,10 +21,8 @@ class PlaceFixtures extends Fixture implements DependentFixtureInterface
         $place1->setLatitude('12');
         $place1->setLongitude('15');
         $place1-> setCity($city1);
+
         $manager->persist($place1);
-
-
-
         $manager->flush();
     }
     public function getDependencies(): array

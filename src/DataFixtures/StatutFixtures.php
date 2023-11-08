@@ -37,7 +37,6 @@ class StatutFixtures extends Fixture
         $manager->persist($statut);
 
 
-        
         $manager->flush();
     }
 }

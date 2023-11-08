@@ -31,3 +31,8 @@ main .titre_create
     align-items: center;
     padding: 20px;
 }
+
+.form_left_sortie .infos textarea
+{
+    resize: none;
+}

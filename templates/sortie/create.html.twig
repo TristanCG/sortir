@@ -10,9 +10,9 @@
                 <h1>LogoSorti.com</h1>
             </div>
             <div class="menu">
-                <a href="{{ asset('home/home.html.twig') }}">Accueil</a>
-                <a href="{{ asset('myProfil/myProfil.html.twig') }}">Mon Profil</a>
-                <a href="{{ asset('log/logOut.html.twig') }}">Se déconnecter</a>
+                <a href="{{ path('app_home') }}">Accueil</a>
+                <a href="{{ path('app_profil') }}">Mon Profil</a>
+                <a href="{{ path('app_logout') }}">Se déconnecter</a>
             </div>
         </navbar>
     </header>
@@ -22,6 +22,19 @@
             <h2>Créer une sortie</h2>
         </div>
         <section class="form_create">
+                {{ form_start(form_sortie) }}
+                {{ form_row(form_sortie.name) }}
+                <div class="dateh">
+                    {{ form_row(form_sortie.dateTimeStart) }}
+                </div>
+                <div class="datel">
+                    {{ form_row(form_sortie.dateLimitRegister) }}
+                </div>
+                {{ form_row(form_sortie.duration) }}
+                <div class="infos">
+                    {{ form_row(form_sortie.information) }}
+                </div>
+                {{ form_end(form_sortie) }}
         </section>
 
     </main>

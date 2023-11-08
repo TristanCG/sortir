@@ -10,6 +10,13 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: StatutRepository::class)]
 class Statut
 {
+    public const CREEE = 'Creee';
+    public const PUBLIER = 'Ouverte';
+    public const TERMINER = 'Cloturee';
+    public const ACTIVE = 'Activite en cours';
+    public const ANNULEE = 'Annulee';
+    public const PASSEE = 'Passee';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

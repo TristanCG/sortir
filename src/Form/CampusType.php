@@ -13,7 +13,10 @@ class CampusType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class, ['label' => false,]);
+            ->add('name', TextType::class,
+                [
+                    'label' => false,
+                ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
