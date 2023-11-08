@@ -40,9 +40,6 @@ class ProfilType extends AbstractType
                 ],
                 'first_options' => [
                     'constraints' => [
-                        new NotBlank([
-                            'message' => 'Please enter a password',
-                        ]),
                         new Length([
                             'min' => 6,
                             'minMessage' => 'Your password should be at least {{ limit }} characters',
@@ -59,6 +56,7 @@ class ProfilType extends AbstractType
                 // Instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
+                'required' => false
             ])
 
             ->add('campus', EntityType::class, [
@@ -83,9 +81,8 @@ class ProfilType extends AbstractType
                         'mimeTypesMessage' => 'Please upload a valid image'
                     ])
                 ]
-            ])
-            ->add('save', SubmitType::class)
-        ;
+            ]);
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void

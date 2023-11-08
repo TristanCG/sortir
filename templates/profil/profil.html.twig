@@ -2,10 +2,29 @@
 
 {% block title %}Mon profil{% endblock %}
 
-{% block body %}
 
-    <h1>Mon profil</h1>
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
-{% endblock %}
+
+    {% block body %}
+        <h1>Edit Profil</h1>
+
+        {{ form_start(form) }}
+        {{ form_row(form.nickname) }}
+        {{ form_row(form.lastname) }}
+        {{ form_row(form.firstname) }}
+        {{ form_row(form.phone) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.plainPassword.first) }}
+        {{ form_row(form.plainPassword.second) }}
+        {{ form_row(form.campus) }}
+        {% if form.image.vars.value is not null %}
+            <div>
+                <img src="{{ asset('uploads/brochures/' ~ app.user.filename) }}" alt="User Image">
+            </div>
+        {% endif %}
+
+        {{ form_row(form.image) }}
+
+        <button type="submit">Save</button>
+        {{ form_end(form) }}
+    {% endblock %}
+
