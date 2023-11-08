@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Campus;
 use App\Form\CampusType;
 use App\Repository\CampusRepository;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,16 +23,11 @@ class CampusController extends AbstractController
         $campusForm->handleRequest($request);
 
         if ($campusForm->isSubmitted() && $campusForm->isValid()) {
-            // Créez une instance de Campus avec les données du formulaire
             $campusData = $campusForm->getData();
 
-            // Persistez l'entité Campus
             $em->persist($campusData);
-
-            // Exécutez la requête pour enregistrer l'entité dans la base de données
             $em->flush();
 
-            // Redirigez l'utilisateur vers la page 'app_campus' après l'ajout
             return $this->redirectToRoute('app_campus');
         }
 
@@ -41,13 +37,23 @@ class CampusController extends AbstractController
         ]);
     }
 
-    #[Route('/campus/edit', name: 'campus_edite', methods: ['GET', 'POST'])]
-    public function edit(Request $request): Response
+    #[Route('/campus/{id}/edit', name: 'campus_edite', methods: ['GET', 'POST'])]
+    public function edit(Request $request, $id, EntityManagerInterface $entityManager): Response
     {
-        $campusForm = $this->createForm(CampusType::class);
+        $campus = $entityManager->getRepository(Campus::class)->find($id);
 
+        if (!$campus) {
+            throw $this->createNotFoundException('Campus introuvable');
+        }
+
+        $campusForm = $this->createForm(CampusType::class, $campus);
         $campusForm->handleRequest($request);
 
+        if ($campusForm->isSubmitted() && $campusForm->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_campus');
+        }
         return $this->render('campus/edit.html.twig', [
             'campusForm' => $campusForm->createView(),
         ]);
