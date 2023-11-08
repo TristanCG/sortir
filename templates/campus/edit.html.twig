@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello la twig edit campus!{% endblock %}
+
+{% block body %}
+    <section>
+        <h1>Campus - Edition</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ path('app_panneau_controle') }}">Panneau de controle</a></li>
+            </ul>
+        </nav>
+
+
+            {{ form_start(campusForm)}}
+                {{ form_widget(campusForm) }}
+                <button>Modifier</button>
+            {{ form_end(campusForm)}}
+    </section>
+{% endblock %}

@@ -36,13 +36,13 @@ class UserType extends AbstractType
             ->add('password', PasswordType::class, ['label' => 'Mot de passe'])
             ->add('phone', TelType::class, ['label' => 'Téléphone', 'required' => false ])
             ->add('active', HiddenType::class, [
-                'data' => true,  // Définir la valeur par défaut sur true
-                'mapped' => false,  // Ne pas associer ce champ au formulaire
+                'data' => true,
+                'mapped' => false,
             ])
             ->add('campus', EntityType::class, [
-                'class' => Campus::class, // Remplacez 'Campus' par le nom de votre entité Campus
-                'choice_label' => 'name', // Le champ 'name' de l'entité Campus sera utilisé pour l'affichage des options
-                'choice_value' => 'id', // Le champ 'id' de l'entité Campus sera utilisé pour les valeurs des options
+                'class' => Campus::class,
+                'choice_label' => 'name',
+                'choice_value' => 'id',
                 'label' => 'Campus',
             ])
         ;

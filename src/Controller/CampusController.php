@@ -41,10 +41,16 @@ class CampusController extends AbstractController
         ]);
     }
 
-    #[Route('/campus/edit', name: 'campus_edite', methods: ['GET'])]
-    public function edit(): Response
+    #[Route('/campus/edit', name: 'campus_edite', methods: ['GET', 'POST'])]
+    public function edit(Request $request): Response
     {
-        return $this->render('campus/index.html.twig');
+        $campusForm = $this->createForm(CampusType::class);
+
+        $campusForm->handleRequest($request);
+
+        return $this->render('campus/edit.html.twig', [
+            'campusForm' => $campusForm->createView(),
+        ]);
     }
 
     #[Route('/campus/{id}/delete', name: 'campus_delete', methods: ['GET'])]
