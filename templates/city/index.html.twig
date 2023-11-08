@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CityController!{% endblock %}
+
+{% block body %}
+    <section>
+        <h1>Villes</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ path('app_panneau_controle') }}">Panneau de controle</a></li>
+            </ul>
+        </nav>
+
+        <table>
+            <tr>
+                <th>Nom</th>
+                <th>Code postal</th>
+                <th>Action</th>
+            </tr>
+
+            {% for city in citys %}
+                <tr>
+                    <td>{{ city.name}}</td>
+                    <td>{{ city.zipCode}}</td>
+                    <td>
+                        <a href="{{ path('city_edite', {'id': city.id}) }}">Modifier</a>
+                        -
+                        <a href="{{ path('city_delete', {'id': city.id}) }}">Supprimer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+
+            {{ form_start(cityForm)}}
+            <tr>
+                <td>{{ form_widget(cityForm.name) }}</td>
+                <td>{{ form_widget(cityForm.zipcode) }}</td>
+                <td><button>Ajouter</button></td>
+            </tr>
+            {{ form_end(cityForm)}}
+        </table>
+    </section>
+{% endblock %}

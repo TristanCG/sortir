@@ -23,16 +23,11 @@ class CampusController extends AbstractController
         $campusForm->handleRequest($request);
 
         if ($campusForm->isSubmitted() && $campusForm->isValid()) {
-            // Créez une instance de Campus avec les données du formulaire
             $campusData = $campusForm->getData();
 
-            // Persistez l'entité Campus
             $em->persist($campusData);
-
-            // Exécutez la requête pour enregistrer l'entité dans la base de données
             $em->flush();
 
-            // Redirigez l'utilisateur vers la page 'app_campus' après l'ajout
             return $this->redirectToRoute('app_campus');
         }
 
