@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PanneauAdminController!{% endblock %}
+
+{% block body %}
+<section>
+    <h1>Panneau de Contrôle</h1>
+    <nav>
+        <ul>
+            <li><a href="{{ path('user_list') }}">Utilisateurs</a></li>
+            <li><a href="{{ path('app_campus') }}">Campus</a></li>
+            <li><a href="{{ path('user_list') }}">Villes</a></li>
+        </ul>
+    </nav>
+</section>
+{% endblock %}

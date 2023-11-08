@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un membre!{% endblock %}
+
+{% block body %}
+    <section>
+        <h1>Inscrire un membre</h1>
+        <div>
+            {{ form_start(userForm)}}
+            {{ form_widget(userForm) }}
+            <button>Ajouter</button>
+            {{ form_end(userForm)}}
+        </div>
+    </section>
+{% endblock %}
