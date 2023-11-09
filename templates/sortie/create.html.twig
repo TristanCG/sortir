@@ -23,18 +23,25 @@
         </div>
         <section class="form_create">
                 {{ form_start(form_sortie) }}
-                {{ form_row(form_sortie.name) }}
-                <div class="dateh">
-                    {{ form_row(form_sortie.dateTimeStart) }}
-                </div>
-                <div class="datel">
-                    {{ form_row(form_sortie.dateLimitRegister) }}
-                </div>
-                {{ form_row(form_sortie.duration) }}
-                <div class="infos">
-                    {{ form_row(form_sortie.information) }}
-                </div>
-                {{ form_end(form_sortie) }}
+                    {{ form_row(form_sortie.name) }}
+                    <div class="dateh">
+                        {{ form_row(form_sortie.dateTimeStart) }}
+                    </div>
+                    <div class="datel">
+                        {{ form_row(form_sortie.dateLimitRegister) }}
+                    </div>
+                    <div>
+                        {{ form_row(form_sortie.duration) }}
+                    </div>
+                    <div class="infos">
+                        {{ form_row(form_sortie.information) }}
+                    </div>
+                    {{ form_row(form_sortie.registerMax) }}
+                    {{ form_row(form_sortie.city) }}
+                    {{ form_row(form_sortie.place) }}
+                <button>Crée une sortie</button>
+
+            {{ form_end(form_sortie) }}
         </section>
 
     </main>

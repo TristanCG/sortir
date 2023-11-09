@@ -47,7 +47,7 @@ class OutsideType extends AbstractType
 
             ->add('duration', IntegerType::class,
             [
-                'label' => 'Durée : '
+                'label' => 'Durée : ',
             ])
 
             ->add('information', TextareaType::class,
@@ -57,6 +57,7 @@ class OutsideType extends AbstractType
 
             ->add('city',EntityType::class,
             [
+                'label' => 'City : ',
                 'class' => City::class,
                 'mapped' => false,
                 'required' => false,
@@ -65,6 +66,7 @@ class OutsideType extends AbstractType
 
         ->add('place', EntityType::class,
               [
+                  'label' => 'Place : ',
                 'class' => Place::class,
                 'mapped' => false,
                 'required' => false,
