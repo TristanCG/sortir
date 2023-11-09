@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}{{ parent() }} | Accueil{% endblock %}
-{%block stylesheets %}<link rel="stylesheet" type="text/css" href="{{ asset('css/home.css') }}">{% endblock %}
 
 {% block body %}
     <h1>Liste des sorties</h1>
 
+    <a href="{{ path('app_create_outside') }}">Créer une sortie</a>
     <table>
         <thead>
             <tr>
@@ -19,5 +19,35 @@
                 <th>Actions</th>
             </tr>
         </thead>
+        <tbody>
+        {% for outside in outsides %}
+            <tr>
+                <td>{{ outside.name }}</td>
+                <td>{{ outside.dateTimeStart|date('Y-m-d') }}</td>
+                <td>{{ outside.dateLimitRegister|date('Y-m-d') }}</td>
+                <td>{{ outside.participants|length }} / {{ outside.registerMax }}</td>
+                <td>{{ outside.statut.wording }}</td>
+                <td>
+                    {% if outside.participants.contains(app.user) %}
+                       X
+                    {% else %}
+
+                    {% endif %}
+                </td>
+                <td>{{ outside.promoter is not null ? outside.promoter.nickname : 'DefaultNickname' }}</td>
+                <td><a href="#">Afficher</a>
+
+                    {% if outside.participants.contains(app.user) %}
+                        <a href="{{ path('outisde_unregister', {'idOutside': outside.id}) }}">Se désinscrire</a>
+                    {% elseif outside.participants|length == outside.registerMax %}
+
+                    {% else %}
+                        <a href="{{ path('outisde_register', {'idOutside': outside.id}) }}">S'inscrire</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
     </table>
 {% endblock %}

@@ -46,18 +46,22 @@ class Outside
     #[ORM\JoinColumn(nullable: false)]
     private ?Place $place = null;
 
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(name: "user_id", referencedColumnName: "id")]
+    private ?User $user = null;
+
     #[ORM\ManyToOne(inversedBy: 'outsides')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $promoter = null;
 
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'outsides')]
-    private Collection $particpants;
+    private Collection $participants;
 
-
+    #[ORM\ManyToOne(targetEntity: "App\Entity\User")]
     public function __construct()
     {
         $this->usersOutsides = new ArrayCollection();
-        $this->particpants = new ArrayCollection();
+        $this->participants = new ArrayCollection();
     }
     
 
@@ -65,7 +69,16 @@ class Outside
     {
         return $this->id;
     }
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
+        return $this;
+    }
     public function getName(): ?string
     {
         return $this->name;
@@ -189,23 +202,23 @@ class Outside
     /**
      * @return Collection<int, User>
      */
-    public function getParticpants(): Collection
+    public function getParticipants(): Collection
     {
-        return $this->particpants;
+        return $this->participants;
     }
 
-    public function addParticpant(User $particpant): static
+    public function addParticipant(User $participant): self
     {
-        if (!$this->particpants->contains($particpant)) {
-            $this->particpants->add($particpant);
+        if (!$this->participants->contains($participant)) {
+            $this->participants->add($participant);
         }
 
         return $this;
     }
 
-    public function removeParticpant(User $particpant): static
+    public function removeParticipant(User $participant): self
     {
-        $this->particpants->removeElement($particpant);
+        $this->participants->removeElement($participant);
 
         return $this;
     }

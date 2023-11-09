@@ -28,16 +28,15 @@ class OutsideController extends AbstractController
 
         // Creation d'une sortie
         $outside = new Outside();
-        // Attribution d'un promotteur à une sortie
         $outside->setPromoter($this->getUser());
 
         // Modification ici pour récupérer le statut correctement
-        $statutId = 1; // Remplacez 1 par l'ID du statut que vous souhaitez attribuer
+        $statutId = 7; // Remplacez 1 par l'ID du statut que vous souhaitez attribuer
         $statut = $statutRepository->find($statutId);   // Récupération de l'Id de la table Statut
         $outside->setStatut($statut);
 
         // Modification ici pour récupérer le place correctement
-        $placeId = 1; // Remplacez 1 par l'ID du statut que vous souhaitez attribuer
+        $placeId = 2; // Remplacez 1 par l'ID du statut que vous souhaitez attribuer
         $place = $placeRepository->find($placeId); // Récupération de l'Id de la table Place
         $outside->setPlace($place);
 
