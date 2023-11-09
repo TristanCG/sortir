@@ -4,18 +4,4 @@
 {%block stylesheets %}<link rel="stylesheet" type="text/css" href="{{ asset('css/home.css') }}">{% endblock %}
 
 {% block body %}
-    <header>
-        <navbar>
-            <div class="logo">
-                <h1>LogoSorti.com</h1>
-            </div>
-            <div class="menu">
-                <a href="{{ path('app_city') }}">Villes</a>
-                <a href="{{ path('app_campus') }}">Campus</a>
-                <a href="{{ path('app_home') }}">Accueil</a>
-                <a href="{{ path('app_profil') }}">Mon Profil</a>
-                <a href="{{ path('app_logout') }}">Se déconnecter</a>
-            </div>
-        </navbar>
-    </header>
 {% endblock %}
