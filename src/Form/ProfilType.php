@@ -62,10 +62,8 @@ class ProfilType extends AbstractType
             ->add('campus', EntityType::class, [
                 'class' => Campus::class,
                 'choice_label' => 'name',
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('t')
-                        ->orderBy('t.name', 'ASC');
-                }
+                'choice_value' => 'id',
+                'label' => 'Campus',
             ])
             ->add('image', FileType::class, [
                 'label' => 'add an image',

@@ -22,6 +22,11 @@ class ProfilController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            // Ajoutez la condition pour gérer le bouton "Annuler"
+            if ($request->request->has('cancelle')) {
+                // Rediriger l'utilisateur vers la page d'accueil
+                return $this->redirectToRoute('app_home');
+            }
 
             // Gérer le téléchargement de l'image s'il y en a une
             $imageFile = $form->get('image')->getData();
@@ -50,8 +55,7 @@ class ProfilController extends AbstractController
             $em->persist($this->getUser());
             $em->flush();
 
-            // Rediriger l'utilisateur vers une page de confirmation ou vers une autre page
-            return $this->redirectToRoute('_profiler_home'); // Assurez-vous de remplacer '_profiler_home' par la route appropriée.
+
         }
 
         return $this->render('profil/profil.html.twig', [
