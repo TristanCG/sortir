@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ parent() }}Crée une sortie{% endblock %}
-{% block stylesheets %}<link rel="stylesheet" type="text/css" href="{{ asset('css/createOutside.css') }}">{% endblock %}
+{% block title %}Crée une sortie{% endblock %}
 
 {% block body %}
     <header>
@@ -22,26 +21,26 @@
             <h2>Créer une sortie</h2>
         </div>
         <section class="form_create">
-                {{ form_start(form_sortie) }}
-                    {{ form_row(form_sortie.name) }}
+                {{ form_start(outsideForm) }}
+                    {{ form_row(outsideForm.name) }}
                     <div class="dateh">
-                        {{ form_row(form_sortie.dateTimeStart) }}
+                        {{ form_row(outsideForm.dateTimeStart) }}
                     </div>
                     <div class="datel">
-                        {{ form_row(form_sortie.dateLimitRegister) }}
+                        {{ form_row(outsideForm.dateLimitRegister) }}
                     </div>
                     <div>
-                        {{ form_row(form_sortie.duration) }}
+                        {{ form_row(outsideForm.duration) }}
                     </div>
                     <div class="infos">
-                        {{ form_row(form_sortie.information) }}
+                        {{ form_row(outsideForm.information) }}
                     </div>
-                    {{ form_row(form_sortie.registerMax) }}
-                    {{ form_row(form_sortie.city) }}
-                    {{ form_row(form_sortie.place) }}
-                <button>Crée une sortie</button>
+                    {{ form_row(outsideForm.registerMax) }}
+                    {{ form_row(outsideForm.city) }}
+                    {{ form_row(outsideForm.place) }}
+                <button href="{{ path('app_home') }}">Crée une sortie</button>
 
-            {{ form_end(form_sortie) }}
+            {{ form_end(outsideForm) }}
         </section>
 
     </main>

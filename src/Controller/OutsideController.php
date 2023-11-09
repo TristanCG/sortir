@@ -16,16 +16,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class OutsideController extends AbstractController
 {
-    #[Route('/outside/place', name: 'app_outside_getId')]
-    public function get(Request $request)
-    {
-        $session = $request->getSession(); // Récupération de la session associé à la demande
-        $placeId = $request->request->get('placeId'); // Extraction de la valeur placId de la requête, valeur soumise par le  formualire
-        $session->set('place', $placeId); // Permet de stocker la valeur placeId dans la session de l'utilisateur concernée
-
-        return new Response('');
-    }
-
     #[Route('/create_outside', name: 'app_create_outside', methods: ['GET', 'POST'])]
     public function index(
         PlaceRepository $placeRepository, // Paramètre permettant d'accéder à Place
@@ -35,52 +25,41 @@ class OutsideController extends AbstractController
         EntityManagerInterface $em //Parmètre permettant une bonne gestion des entit
     ): Response
     {
-        // Recuperation de toutes les proprietes de la table city
-        $citys = $cityRepository->findAll();
-        // Recuperation du Statut CREATE via la table STATUT
-        $statutCrea = $statutRepository->findByWording(Statut::CREEE);
-        // Recuperation du Statut PUBLIER via la table STATUT
-        $statutPublish = $statutRepository->findByWording(Statut::PUBLIER);
-        // Recuperation des infos de la session
-        $session = $request->getSession();
+
         // Creation d'une sortie
         $outside = new Outside();
         // Attribution d'un promotteur à une sortie
         $outside->setPromoter($this->getUser());
 
-        if ($request->request->has('register')) {
-            $outside->setStatut($statutCrea);
-        }
+        // Modification ici pour récupérer le statut correctement
+        $statutId = 1; // Remplacez 1 par l'ID du statut que vous souhaitez attribuer
+        $statut = $statutRepository->find($statutId);   // Récupération de l'Id de la table Statut
+        $outside->setStatut($statut);
 
-        if ($request->request->has('publish')) {
-            $outside->setStatut($statutPublish);
-        }
+        // Modification ici pour récupérer le place correctement
+        $placeId = 1; // Remplacez 1 par l'ID du statut que vous souhaitez attribuer
+        $place = $placeRepository->find($placeId); // Récupération de l'Id de la table Place
+        $outside->setPlace($place);
 
         // Création d'un formulaire de sortie
-        $form_sortie = $this->createForm(OutsideType::class, $outside);
+        $outsideForm = $this->createForm(OutsideType::class, $outside);
         // Permet de récupérer les données et de les associer au formualire de sortie
-        $form_sortie->handleRequest($request);
+        $outsideForm->handleRequest($request);
 
-        // On check si le formualire à été rempli avant d'être envoyé
-        if ($form_sortie->isSubmitted() && $form_sortie->isValid()) {
-            $placeId = $session->get('place');
-            if ($placeId) {
-                $place = $placeRepository->find($placeId);
-                $outside->setPlace($place);
-            } else {
-                throw new \Exception('Place is null');
-            }
 
-            $em->persist($outside);
-            $em->flush();
+
+        // On check si le formualire à été rempli avant de revenir sur la page d'accueil avec le tableau recap des sorties
+        if ($outsideForm->isSubmitted() && $outsideForm->isValid()) {
+          $outsideData = $outsideForm->getData();
+
+          $em->persist($outsideData);
+          $em->flush();
 
             return $this->redirectToRoute('app_home');
         }
 
         return $this->render('sortie/create.html.twig', [
-            'form_sortie' => $form_sortie,
-            'citys' => $citys,
-            ''
+            'outsideForm' => $outsideForm,
         ]);
     }
 }

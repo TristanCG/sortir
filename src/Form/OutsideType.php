@@ -55,6 +55,13 @@ class OutsideType extends AbstractType
                 'label' => 'Description et infos : '
             ])
 
+            ->add('campus', EntityType::class, [
+                'class' => Campus::class,
+                'choice_label' => 'name',
+                'choice_value' => 'id',
+                'label' => 'Campus',
+            ])
+
             ->add('city',EntityType::class,
             [
                 'label' => 'City : ',
@@ -66,7 +73,7 @@ class OutsideType extends AbstractType
 
         ->add('place', EntityType::class,
               [
-                  'label' => 'Place : ',
+                'label' => 'Place : ',
                 'class' => Place::class,
                 'mapped' => false,
                 'required' => false,
